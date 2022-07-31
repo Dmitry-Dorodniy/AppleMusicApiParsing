@@ -1,8 +1,8 @@
 import Foundation
 
-struct NetworkService {
+class NetworkService {
 
-   func request(urlSrting: String, complition: @escaping (Result<SearchResponse, Error>) -> Void) {
+   func request(urlSrting: String, complition: @escaping (Result<Data, Error>) -> Void) {
         guard let url = URL(string: urlSrting) else {return}
         URLSession.shared.dataTask(with: url) { data, responce, error in
             DispatchQueue.main.async {
@@ -12,13 +12,7 @@ struct NetworkService {
                     return
                 }
                 guard let data = data else { return }
-                do {
-                    let tracks = try JSONDecoder().decode(SearchResponse.self, from: data)
-                    complition(.success(tracks))
-                } catch let jsonError {
-                    print("Failed to decode JSON", jsonError)
-                    complition(.failure(jsonError))
-                }
+                complition(.success(data))
             }
         }.resume()
     }
