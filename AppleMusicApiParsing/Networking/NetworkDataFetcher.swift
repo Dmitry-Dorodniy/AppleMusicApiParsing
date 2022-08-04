@@ -13,7 +13,9 @@ class NetworkDataFetcher {
 //                    print(tracks.results)
                     response(tracks)
                 } catch let jsonError {
+                    print(String(data: data, encoding: .utf8))
                     print("Failed to decode JSON", jsonError)
+                    response(nil)
                 }
             case .failure(let error):
                 print("Error received requesting data: \(error.localizedDescription)")

@@ -7,7 +7,6 @@ class NetworkService {
         URLSession.shared.dataTask(with: url) { data, responce, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    print("error")
                     complition(.failure(error))
                     return
                 }
